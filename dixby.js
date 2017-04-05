@@ -3,6 +3,7 @@ var keys = require('./keys.js');
 //require functions for twitter et al
 var Twitter = require('twitter');
 var Spotify = require('spotify');
+var Request = require('request');
 
 //twitter variables
 var twitterKeys = new Twitter({
@@ -46,17 +47,22 @@ function myTweets() {
             console.log('Error occurred: ' + error);
             return;
         }
-            //need a for loop to run through first 20 tweets
-            for (i = 0; i < 20; i++) {
-            	console.log("\n****************************\n");
-                console.log("Latest Tweet#" + (i + 1));
-                console.log("Tweeted at: " + tweets[i].created_at);
-                console.log(tweets[i].text);
-            }
+        //need a for loop to run through first 20 tweets
+        for (i = 0; i < 20; i++) {
+            console.log("\n****************************\n");
+            console.log("Latest Tweet#" + (i + 1));
+            console.log("Tweeted at: " + tweets[i].created_at);
+            console.log(tweets[i].text);
+        }
     });
 };
 
 function spotifyThisSong() {
+    //handle if the second input wasn't entered
+    if (typeof(secondAction) === 'undefined') {
+        secondAction = "The+Sign"
+    };
+
     Spotify.search({ type: 'track', query: secondAction }, function(error, data) {
         if (error) {
             console.log('Error occurred: ' + error);
@@ -71,12 +77,33 @@ function spotifyThisSong() {
             console.log("Preview Link: " + data.tracks.items[i].preview_url);
             console.log("Album Name: " + data.tracks.items[i].album.name);
         }
+        console.log(typeof secondAction);
     });
 
 };
 
 function movieThis() {
-    console.log("running movieThis()");
+	//todo: handle movie titles with multiple words.
+	//todo:  handle no second input
+	//todo:  rotten tomatoes breaks if it's not there.
+	//todo:  rotten tomates URL???
+    Request("http://www.omdbapi.com/?t=" + secondAction + "&y=&plot=short&r=json", function(error, response, body) {
+        if (error) {
+            console.log('Error occurred: ' + error);
+            return;
+        }
+       	//results
+       	console.log("\n****************************\nMovie Title: " + JSON.parse(body).Title);
+       	console.log("Year: " + JSON.parse(body).Year);
+       	console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
+        console.log("Country: " + JSON.parse(body).Country);
+        console.log("Language: " + JSON.parse(body).Language);
+        console.log("Plot: " + JSON.parse(body).Plot);
+        console.log("Actors: " + JSON.parse(body).Actors);
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+        console.log("Rotten Tomatoes Link: ";
+    });
+
 };
 
 function doWhatItSays() {
