@@ -7,7 +7,6 @@ var Colors = require('colors/safe');
 //make a couple color themes
 Colors.setTheme({
     error: ['red', 'bgWhite', 'bold'],
-    border:['zebra', 'bold'],
     tweet:['bold'],
     tweet1:['cyan','bold']
 });
@@ -61,9 +60,10 @@ function myTweets() {
         //need a for loop to run through first 20 tweets
         for (i = 0; i < 20; i++) {
             console.log(Colors.error("Latest Tweet #" +(i + 1)));
-            console.log(Colors.tweet1("Tweeted at: " + tweets[i].created_at));
-            console.log(Colors.tweet(tweets[i].text));
-            console.log(Colors.bgRed("                                                                              "));
+            console.log(Colors.tweet1("\nTweeted at: " + Colors.green(tweets[i].created_at)+"\n"));
+            console.log(Colors.tweet1(Colors.green(tweets[i].text)));
+            console.log(Colors.bgRed("                                                                               "));
+            console.log(Colors.bgRed("                                                                               "));
         }
     });
 };
@@ -82,11 +82,12 @@ function spotifyThisSong() {
 
         //for loop to go through all of the tracks returned
         for (i = 0; i < data.tracks.items.length; i++) {
-            console.log(Colors.error("Arist: " + data.tracks.items[i].artists[0].name));
+            console.log(Colors.tweet1("Arist: " + Colors.error(data.tracks.items[i].artists[0].name)));
             console.log(Colors.tweet1("Track Name: " + Colors.green(data.tracks.items[i].name)));
             console.log(Colors.tweet1("Preview Link: " + Colors.green(data.tracks.items[i].preview_url)));
             console.log(Colors.tweet1("Album Name: " + Colors.green(data.tracks.items[i].album.name)));
-            console.log(Colors.bgRed("                                                                              "));
+            console.log(Colors.bgRed("                                                                               "));
+            console.log(Colors.bgRed("                                                                               "));
         }
     });
 
@@ -95,8 +96,10 @@ function spotifyThisSong() {
 function movieThis() {
     if (typeof(secondAction) === 'undefined') {
         secondAction = "Mr. Nobody";
-        console.log("If you haven't watched 'Mr. Nobody,'' then you should: http://www.imdb.com/title/tt0485947/");
-        console.log("It's on Netflix!");
+        console.log(Colors.bgRed("                                                                               "));
+        console.log(Colors.bgRed("                                                                               "));
+        console.log(Colors.error("If you haven't watched 'Mr. Nobody,'' then you should: " + Colors.blue("\nhttp://www.imdb.com/title/tt0485947/")));
+        console.log(Colors.error("It's on Netflix!"));
     };
 
     Request("http://www.omdbapi.com/?t=" + secondAction + "&y=&plot=short&tomatoes=true&r=json", function(error, response, body) {
@@ -105,15 +108,19 @@ function movieThis() {
             return;
         }
         //results
-        console.log("\n****************************\nMovie Title: " + JSON.parse(body).Title);
-        console.log("Year: " + JSON.parse(body).Year);
-        console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
-        console.log("Country: " + JSON.parse(body).Country);
-        console.log("Language: " + JSON.parse(body).Language);
-        console.log("Plot: " + JSON.parse(body).Plot);
-        console.log("Actors: " + JSON.parse(body).Actors);
-        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-        console.log("Rotten Tomatoes Link: " + JSON.parse(body).tomatoURL);
+        console.log(Colors.bgRed("                                                                               "));
+        console.log(Colors.bgRed("                                                                               "));
+        console.log(Colors.tweet1("Title: " + Colors.error(JSON.parse(body).Title)));
+        console.log(Colors.tweet1("Year: " + Colors.green(JSON.parse(body).Year)));
+        console.log(Colors.tweet1("IMDB Rating: " + Colors.green(JSON.parse(body).imdbRating)));
+        console.log(Colors.tweet1("Country: " + Colors.green(JSON.parse(body).Country)));
+        console.log(Colors.tweet1("Language: " + Colors.green(JSON.parse(body).Language)));
+        console.log(Colors.tweet1("Plot: " + Colors.green(JSON.parse(body).Plot)));
+        console.log(Colors.tweet1("Actors: " + Colors.green(JSON.parse(body).Actors)));
+        console.log(Colors.tweet1("Rotten Tomatoes Rating: " + Colors.green(JSON.parse(body).Ratings[1].Value)));
+        console.log(Colors.tweet1("Rotten Tomatoes Link: " + Colors.green(JSON.parse(body).tomatoURL)));
+        console.log(Colors.bgRed("                                                                               "));
+        console.log(Colors.bgRed("                                                                               "));
     });
 
 };
