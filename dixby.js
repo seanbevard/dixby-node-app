@@ -117,7 +117,12 @@ function movieThis() {
         console.log(Colors.tweet1("Language: " + Colors.green(JSON.parse(body).Language)));
         console.log(Colors.tweet1("Plot: " + Colors.green(JSON.parse(body).Plot)));
         console.log(Colors.tweet1("Actors: " + Colors.green(JSON.parse(body).Actors)));
-        console.log(Colors.tweet1("Rotten Tomatoes Rating: " + Colors.green(JSON.parse(body).Ratings[1].Value)));
+
+        var ratingAtIndexOne = ( typeof JSON.parse(body).Ratings !== "undefined" )
+                                  ? "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value
+                                  : "Rating: Not Available";
+
+        console.log(Colors.tweet1(Colors.green(ratingAtIndexOne)));
         console.log(Colors.tweet1("Rotten Tomatoes Link: " + Colors.green(JSON.parse(body).tomatoURL)));
         console.log(Colors.bgRed("                                                                               "));
         console.log(Colors.bgRed("                                                                               "));
